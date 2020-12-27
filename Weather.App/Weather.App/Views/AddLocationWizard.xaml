@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Weather.App.Views.AddLocationWizard">
+    <ContentPage.Content>
+        <StackLayout VerticalOptions="Center"
+                     Padding="20"
+                     Spacing="20">
+            <Button Text="Use my location"
+                    Command="{Binding AddLocationByMyLocationCommand}"
+                    CornerRadius="20"/>
+            <Button Text="Select from list"
+                    Command="{Binding AddLocationByListCommand}"
+                    CornerRadius="20"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
