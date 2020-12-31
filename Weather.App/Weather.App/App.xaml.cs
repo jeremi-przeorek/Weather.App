@@ -1,6 +1,7 @@
 ﻿using System;
 using Weather.App.ViewModels;
 using Weather.App.Views;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 

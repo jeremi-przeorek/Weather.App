@@ -10,15 +10,15 @@
                 CornerRadius="20"
                 Command="{Binding ShowAddLocationWizardCommand}"/>
             <ListView HasUnevenRows="True" 
-                      ItemsSource="{Binding Locations}">
+                      ItemsSource="{Binding WeatherLocations}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell Height="80">
                             <StackLayout Orientation="Horizontal" VerticalOptions="Center">
-                                <Label Text="{Binding Name}"
+                                <Label Text="{Binding City}"
                                        FontSize="Title"
                                        Margin="20"></Label>
-                                <Label Text="{Binding Temperature}"
+                                <Label Text="{Binding CountryCode}"
                                        HorizontalOptions="EndAndExpand"
                                        FontSize="Title"
                                        Margin="20"></Label>
