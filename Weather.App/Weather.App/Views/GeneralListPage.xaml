@@ -10,7 +10,10 @@
                 CornerRadius="20"
                 Command="{Binding ShowAddLocationWizardCommand}"/>
             <ListView HasUnevenRows="True" 
-                      ItemsSource="{Binding WeatherLocations}">
+                      ItemsSource="{Binding WeatherLocations}"
+                      RefreshCommand="{Binding UpdateWeatherLocationsListCommand}"
+                      IsPullToRefreshEnabled="True"
+                      IsRefreshing="{Binding IsRefreshing}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell Height="80">

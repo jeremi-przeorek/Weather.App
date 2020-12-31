@@ -19,6 +19,7 @@ namespace Weather.App.ViewModels
             _pageService = new PageService();
             WeatherLocations = new ObservableCollection<WeatherLocation>(_weatherLocationRepository.GetAll());
             ShowAddLocationWizardCommand = new Command(ShowAddLocationWizard);
+            UpdateWeatherLocationsListCommand = new Command(UpdateWeatherLocationsList);
         }
 
         public List<WeatherLocation> Locations { get; set; } = new List<WeatherLocation>
@@ -32,12 +33,25 @@ namespace Weather.App.ViewModels
             get => _weatherLocations;
             private set => SetProperty(ref _weatherLocations, value);
         }
+        private bool _isRefreshing;
+        public bool IsRefreshing
+        {
+            get { return _isRefreshing; }
+            set { SetProperty(ref _isRefreshing, value); }
+        }
 
         public ICommand ShowAddLocationWizardCommand { get; private set; }
+        public ICommand UpdateWeatherLocationsListCommand { get; private set; }
 
         private async void ShowAddLocationWizard()
         {
             await _pageService.PushAsync(new AddLocationWizard());
+        }
+
+        private void UpdateWeatherLocationsList()
+        {
+            WeatherLocations = new ObservableCollection<WeatherLocation>(_weatherLocationRepository.GetAll());
+            IsRefreshing = false;
         }
     }
 }
