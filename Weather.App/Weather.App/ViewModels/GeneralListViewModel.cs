@@ -21,6 +21,7 @@ namespace Weather.App.ViewModels
             ShowAddLocationWizardCommand = new Command(ShowAddLocationWizard);
             UpdateWeatherLocationsListCommand = new Command(UpdateWeatherLocationsList);
             ShowWeatherPresentationPageCommand = new Command<WeatherLocation>(ShowWeatherPresentationPage);
+            DeleteWeatherLocationEntityCommand = new Command<WeatherLocation>(DeleteWeatherLocationEntity);
         }
 
         public List<WeatherLocation> Locations { get; set; } = new List<WeatherLocation>
@@ -44,6 +45,7 @@ namespace Weather.App.ViewModels
         public ICommand ShowAddLocationWizardCommand { get; private set; }
         public ICommand UpdateWeatherLocationsListCommand { get; private set; }
         public ICommand ShowWeatherPresentationPageCommand { get; private set; }
+        public ICommand DeleteWeatherLocationEntityCommand { get; private set; }
 
         private async void ShowAddLocationWizard()
         {
@@ -61,6 +63,12 @@ namespace Weather.App.ViewModels
             _pageService.PushAsync(
                 new WeatherPresentation(
                     location));
+        }
+
+        private void DeleteWeatherLocationEntity(WeatherLocation location)
+        {
+            _weatherLocationRepository.Remove(location);
+            UpdateWeatherLocationsList();
         }
     }
 }

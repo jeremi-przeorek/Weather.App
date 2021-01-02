@@ -29,5 +29,14 @@ namespace Weather.App.Services
                 return weatherlocationContext.WeatherLocations.ToList();
             }
         }
+
+        public void Remove(WeatherLocation location)
+        {
+            using (var weatherlocationContext = new WeatherLocationContext())
+            {
+                weatherlocationContext.WeatherLocations.Remove(location);
+                weatherlocationContext.SaveChanges();
+            }
+        }
     }
 }

@@ -9,5 +9,6 @@ namespace Weather.App.Data
     {
         IEnumerable<WeatherLocation> GetAll();
         void Add(WeatherLocation location);
+        void Remove(WeatherLocation location);
     }
 }

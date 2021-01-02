@@ -18,6 +18,11 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell Height="80">
+                            <ViewCell.ContextActions>
+                                <MenuItem Clicked="OnDelete"
+                                          CommandParameter="{Binding .}"
+                                          Text="Delete" IsDestructive="True" />
+                            </ViewCell.ContextActions>
                             <StackLayout Orientation="Horizontal" VerticalOptions="Center">
                                 <Label Text="{Binding City}"
                                        FontSize="Title"
