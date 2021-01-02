@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Syncfusion.SfChart.XForms;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Weather.App.Models;
 using Weather.App.ViewModels;
@@ -31,6 +33,13 @@ namespace Weather.App.Views
             ViewModel.GetWeatherDataCommand.Execute(null);
 
             base.OnAppearing();
+        }
+        private void Chart_SelectionChanged(object sender, ChartSelectionEventArgs e)
+        {
+            if (e.SelectedDataPointIndex > -1)
+            {
+                ViewModel.ChangeSelectedDayCommand.Execute(e.SelectedDataPointIndex);
+            }
         }
     }
 }

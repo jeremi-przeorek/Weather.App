@@ -1,4 +1,7 @@
-﻿using System.Collections.ObjectModel;
+﻿using Syncfusion.SfChart.XForms;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Weather.App.Models;
@@ -10,24 +13,35 @@ namespace Weather.App.ViewModels
     public class WeatherPresentationViewModel : BaseViewModel
     {
         private WeatherForecastService _weatherForecastService = new WeatherForecastService();
+        private WeatherLocation _location;
+
         public WeatherPresentationViewModel(WeatherLocation location)
         {
-            Location = location;
+            _location = location;
             YBindingPath = "Temp";
+            Title = string.Format("Weather forecast for {0}", location.City);
+            DailyForecastDtos = new ObservableCollection<DailyForecastDto>();
 
-            GetWeatherDataCommand = new Command(async () => GetWeatherData());
+
+            GetWeatherDataCommand = new Command(async () => await GetWeatherData());
+            ChangeSelectedDayCommand = new Command<int>(ChangeSelectedDay);
+
         }
 
         public ICommand GetWeatherDataCommand { get; private set; }
+        public ICommand ChangeSelectedDayCommand { get; private set; }
 
         private async Task GetWeatherData()
         {
-            DailyForecast16DaysDto = await _weatherForecastService.GetDailyForecastFor16Days(Location);
-            DailyForecastDtos 
-                = new ObservableCollection<DailyForecastDto>(DailyForecast16DaysDto.Data);
+            var dailyForecast16DaysDto = await _weatherForecastService.GetDailyForecastFor16Days(_location);
+            DailyForecastDtos
+                = new ObservableCollection<DailyForecastDto>(dailyForecast16DaysDto.Data);
         }
 
-        public WeatherLocation Location { get; set; }
+        private void ChangeSelectedDay(int selectedDayIndex)
+        {
+            SelectedDayForecast = DailyForecastDtos[selectedDayIndex];
+        }
 
         private ObservableCollection<DailyForecastDto> _dailyForecastDtos;
         public ObservableCollection<DailyForecastDto> DailyForecastDtos
@@ -37,19 +51,24 @@ namespace Weather.App.ViewModels
         }
 
         private string _yBindingPath;
-
         public string YBindingPath
         {
             get { return _yBindingPath; }
             set { SetProperty(ref _yBindingPath, value); }
         }
 
-
-        private DailyForecast16DaysDto _dailyForecast16DaysDto;
-        public DailyForecast16DaysDto DailyForecast16DaysDto
+        private int _selectedDay;
+        public int SelectedDay
         {
-            get { return _dailyForecast16DaysDto; }
-            set { SetProperty(ref _dailyForecast16DaysDto, value); }
+            get { return _selectedDay; }
+            set { SetProperty(ref _selectedDay, value); }
+        }
+
+        private DailyForecastDto _selectedDayForecast;
+        public DailyForecastDto SelectedDayForecast
+        {
+            get { return _selectedDayForecast; }
+            set { SetProperty(ref _selectedDayForecast, value); }
         }
     }
 }

@@ -24,6 +24,12 @@ namespace Weather.App.Views
             ViewModel.ShowWeatherPresentationPageCommand.Execute(e.Item);
         }
 
+        protected override void OnAppearing()
+        {
+            ViewModel.UpdateWeatherLocationsListCommand.Execute(null);
+
+            base.OnAppearing();
+        }
 
         private void OnDelete(object sender, EventArgs e)
         {

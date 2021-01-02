@@ -2,14 +2,15 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Weather.App.Views.WeatherPresentation"
-             xmlns:chart="clr-namespace:Syncfusion.SfChart.XForms;assembly=Syncfusion.SfChart.XForms">
+             xmlns:chart="clr-namespace:Syncfusion.SfChart.XForms;assembly=Syncfusion.SfChart.XForms"
+             Title="{Binding Title}">
     <ContentPage.Content>
         <StackLayout>
-
-            <chart:SfChart x:Name="Chart" 
+            <chart:SfChart x:Name="chart_1"
                            HorizontalOptions="FillAndExpand" 
                            VerticalOptions="FillAndExpand"
-                           Margin="20">
+                           Margin="20"
+                           SelectionChanged="Chart_SelectionChanged">
                 <chart:SfChart.PrimaryAxis>
 
                     <chart:CategoryAxis>
@@ -29,22 +30,75 @@
                     </chart:NumericalAxis>
 
                 </chart:SfChart.SecondaryAxis>
-                
+
                 <chart:SfChart.Series>
 
                     <chart:ColumnSeries 
+                        x:Name="columnSeries1"
                         ItemsSource="{Binding DailyForecastDtos}" 
                         XBindingPath="Datetime" 
                         YBindingPath="{Binding YBindingPath}"
                         EnableAnimation="True"
-                        EnableTooltip="True">
+                        EnableTooltip="True"
+                        IsVisible="True"
+                        EnableDataPointSelection="True">
 
                     </chart:ColumnSeries>
+
+                    <chart:SplineSeries 
+                        ItemsSource="{Binding DailyForecastDtos}" 
+                        XBindingPath="Datetime" 
+                        YBindingPath="HighTemp"
+                        Color="Red"
+                        EnableAnimation="True"
+                        EnableTooltip="True"
+                        IsVisible="False">
+                    </chart:SplineSeries>
 
                 </chart:SfChart.Series>
 
             </chart:SfChart>
-            <Label Text="dupa"></Label>
+            <ScrollView Padding="20">
+                <StackLayout Orientation="Vertical">
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Selected day:"
+                               HorizontalOptions="Center"></Label>
+                        <Label Text="{Binding SelectedDayForecast.Datetime}"></Label>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Max Temp (°C)"
+                               HorizontalOptions="StartAndExpand"></Label>
+                        <Label Text="{Binding SelectedDayForecast.MaxTemp}"></Label>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Min Temp (°C)"
+                               HorizontalOptions="StartAndExpand"></Label>
+                        <Label Text="{Binding SelectedDayForecast.MinTemp}"
+                               VerticalOptions="CenterAndExpand"></Label>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Snow (in mm):"
+                               HorizontalOptions="StartAndExpand"></Label>
+                        <Label Text="{Binding SelectedDayForecast.Snow}"></Label>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Average relative humidity (%)"
+                               HorizontalOptions="StartAndExpand"></Label>
+                        <Label Text="{Binding SelectedDayForecast.Rh}"></Label>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Average total cloud coverage (%)"
+                               HorizontalOptions="StartAndExpand"></Label>
+                        <Label Text="{Binding SelectedDayForecast.Clouds}"></Label>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Maximum UV Index"
+                               HorizontalOptions="StartAndExpand"></Label>
+                        <Label Text="{Binding SelectedDayForecast.Uv}"></Label>
+                    </StackLayout>
+                </StackLayout>
+
+            </ScrollView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
