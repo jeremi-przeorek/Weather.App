@@ -20,6 +20,7 @@ namespace Weather.App.ViewModels
             WeatherLocations = new ObservableCollection<WeatherLocation>(_weatherLocationRepository.GetAll());
             ShowAddLocationWizardCommand = new Command(ShowAddLocationWizard);
             UpdateWeatherLocationsListCommand = new Command(UpdateWeatherLocationsList);
+            ShowWeatherPresentationPageCommand = new Command<WeatherLocation>(ShowWeatherPresentationPage);
         }
 
         public List<WeatherLocation> Locations { get; set; } = new List<WeatherLocation>
@@ -42,6 +43,7 @@ namespace Weather.App.ViewModels
 
         public ICommand ShowAddLocationWizardCommand { get; private set; }
         public ICommand UpdateWeatherLocationsListCommand { get; private set; }
+        public ICommand ShowWeatherPresentationPageCommand { get; private set; }
 
         private async void ShowAddLocationWizard()
         {
@@ -52,6 +54,13 @@ namespace Weather.App.ViewModels
         {
             WeatherLocations = new ObservableCollection<WeatherLocation>(_weatherLocationRepository.GetAll());
             IsRefreshing = false;
+        }
+
+        private void ShowWeatherPresentationPage(WeatherLocation location)
+        {
+            _pageService.PushAsync(
+                new WeatherPresentation(
+                    location));
         }
     }
 }

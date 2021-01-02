@@ -13,7 +13,8 @@
                       ItemsSource="{Binding WeatherLocations}"
                       RefreshCommand="{Binding UpdateWeatherLocationsListCommand}"
                       IsPullToRefreshEnabled="True"
-                      IsRefreshing="{Binding IsRefreshing}">
+                      IsRefreshing="{Binding IsRefreshing}"
+                      ItemTapped="ListView_ItemTapped">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell Height="80">

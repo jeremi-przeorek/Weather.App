@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Weather.App.Models
 {
-    class WeatherLocation
+    public class WeatherLocation
     {
         public int Id { get; set; }
         public string City { get; set; }

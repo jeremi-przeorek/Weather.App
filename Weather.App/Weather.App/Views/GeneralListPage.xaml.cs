@@ -17,5 +17,16 @@ namespace Weather.App.Views
 
             BindingContext = new GeneralListViewModel();
         }
+
+        private void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
+        {
+            ViewModel.ShowWeatherPresentationPageCommand.Execute(e.Item);
+        }
+
+        private GeneralListViewModel ViewModel
+        {
+            get { return BindingContext as GeneralListViewModel; }
+            set { BindingContext = value; }
+        }
     }
 }
