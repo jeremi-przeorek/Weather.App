@@ -11,7 +11,8 @@
                     CornerRadius="20"/>
             <Button Text="Select from list"
                     Command="{Binding AddLocationByListCommand}"
-                    CornerRadius="20"/>
+                    CornerRadius="20"
+                    IsEnabled="False"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
