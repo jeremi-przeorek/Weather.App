@@ -3,16 +3,28 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Weather.App.Views.AddLocationWizard">
     <ContentPage.Content>
-        <StackLayout VerticalOptions="Center"
-                     Padding="20"
-                     Spacing="20">
+        <Grid VerticalOptions="Center"
+                     Padding="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <ActivityIndicator IsRunning="{Binding IsRefreshing}"
+                               IsVisible="{Binding IsRefreshing}"
+                               IsEnabled="True"
+                               Grid.Row="0"/>
             <Button Text="Use my location"
                     Command="{Binding AddLocationByMyLocationCommand}"
-                    CornerRadius="20"/>
+                    CornerRadius="20"
+                    VerticalOptions="CenterAndExpand"
+                    Grid.Row="1"/>
             <Button Text="Select from list"
                     Command="{Binding AddLocationByListCommand}"
                     CornerRadius="20"
-                    IsEnabled="False"/>
-        </StackLayout>
+                    VerticalOptions="Center"
+                    IsEnabled="False"
+                    Grid.Row="2"/>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

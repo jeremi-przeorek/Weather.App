@@ -28,8 +28,16 @@ namespace Weather.App.ViewModels
         public ICommand AddLocationByMyLocationCommand { get; private set; }
         public ICommand AddLocationByListCommand { get; private set; }
 
+        public bool _isRefreshing; 
+        public bool IsRefreshing
+        {
+            get { return _isRefreshing; }
+            set {SetProperty(ref _isRefreshing, value); }
+        }
+
         private async void AddLocationByMyLocation()
         {
+            IsRefreshing = true;
             Location location;
 
             try
@@ -38,7 +46,7 @@ namespace Weather.App.ViewModels
 
                 if (location != null)
                 {
-                    var weatherLocation = 
+                    var weatherLocation =
                         await _weatherForecastService.GetWeatherLocationByLatLon(location.Latitude, location.Longitude);
 
                     _weatherLocationRepository.Add(new WeatherLocation
@@ -48,6 +56,7 @@ namespace Weather.App.ViewModels
                     });
 
                     await _pageService.DisplayAlert(string.Empty, string.Format("Properly added city: {0}", weatherLocation.City), "Ok");
+                    IsRefreshing = false;
                 }
             }
             catch (FeatureNotSupportedException fnsEx)
