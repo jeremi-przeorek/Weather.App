@@ -22,10 +22,15 @@ namespace Weather.App.ViewModels
             Title = string.Format("Weather forecast for {0}", location.City);
             DailyForecastDtos = new ObservableCollection<DailyForecastDto>();
 
-
             GetWeatherDataCommand = new Command(async () => await GetWeatherData());
             ChangeSelectedDayCommand = new Command<int>(ChangeSelectedDay);
+        }
 
+        private bool _isDataLoading;
+        public bool IsDataLoading
+        {
+            get { return _isDataLoading; }
+            set { SetProperty(ref _isDataLoading, value); }
         }
 
         public ICommand GetWeatherDataCommand { get; private set; }
@@ -33,9 +38,11 @@ namespace Weather.App.ViewModels
 
         private async Task GetWeatherData()
         {
+            IsDataLoading = true;
             var dailyForecast16DaysDto = await _weatherForecastService.GetDailyForecastFor16Days(_location);
             DailyForecastDtos
                 = new ObservableCollection<DailyForecastDto>(dailyForecast16DaysDto.Data);
+            IsDataLoading = false;
         }
 
         private void ChangeSelectedDay(int selectedDayIndex)

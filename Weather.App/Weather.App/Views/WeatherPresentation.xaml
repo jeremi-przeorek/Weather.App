@@ -3,14 +3,27 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Weather.App.Views.WeatherPresentation"
              xmlns:chart="clr-namespace:Syncfusion.SfChart.XForms;assembly=Syncfusion.SfChart.XForms"
+             xmlns:shimmer="clr-namespace:Syncfusion.XForms.Shimmer;assembly=Syncfusion.Core.XForms"
+             xmlns:local="clr-namespace:Weather.App.Converters"
              Title="{Binding Title}">
+    <ContentPage.Resources>
+        <local:InverseBoolConverter x:Key="inverter"/>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout>
+            <shimmer:SfShimmer x:Name="shimmer"
+                               HorizontalOptions="FillAndExpand"
+                               VerticalOptions="FillAndExpand"
+                               Type="Shopping"
+                               IsVisible="{Binding IsDataLoading}"
+                               IsActive="{Binding IsDataLoading}">
+            </shimmer:SfShimmer>
             <chart:SfChart x:Name="chart_1"
                            HorizontalOptions="FillAndExpand" 
                            VerticalOptions="FillAndExpand"
                            Margin="20"
-                           SelectionChanged="Chart_SelectionChanged">
+                           SelectionChanged="Chart_SelectionChanged"
+                           IsVisible="{Binding IsDataLoading, Converter={StaticResource inverter}}">
                 <chart:SfChart.PrimaryAxis>
 
                     <chart:CategoryAxis>
