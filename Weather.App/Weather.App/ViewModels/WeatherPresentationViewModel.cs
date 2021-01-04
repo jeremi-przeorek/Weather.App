@@ -46,7 +46,6 @@ namespace Weather.App.ViewModels
         public WeatherPresentationViewModel(WeatherLocation location)
         {
             _location = location;
-            _pageService = DependencyService.Get<IPageService>();
 
             Title = string.Format("Weather forecast for {0}", location.City);
 

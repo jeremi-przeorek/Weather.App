@@ -9,15 +9,6 @@ namespace Weather.App.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        protected BaseViewModel()
-        {
-        }
-
-        protected BaseViewModel(IPageService pageService)
-        {
-            _pageService = pageService;
-        }
-
         protected IPageService _pageService;
 
         bool isBusy = false;
@@ -32,6 +23,11 @@ namespace Weather.App.ViewModels
         {
             get { return title; }
             set { SetProperty(ref title, value); }
+        }
+
+        protected BaseViewModel()
+        {
+            _pageService = DependencyService.Get<IPageService>();
         }
 
         protected bool SetProperty<T>(ref T backingStore, T value,

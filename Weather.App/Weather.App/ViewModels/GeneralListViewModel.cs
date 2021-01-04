@@ -30,8 +30,8 @@ namespace Weather.App.ViewModels
 
         public GeneralListViewModel()
         {
-            _pageService = new PageService();
             WeatherLocations = new ObservableCollection<WeatherLocation>(_weatherLocationRepository.GetAll());
+
             ShowAddLocationWizardCommand = new Command(ShowAddLocationWizard);
             UpdateWeatherLocationsListCommand = new Command(UpdateWeatherLocationsList);
             ShowWeatherPresentationPageCommand = new Command<WeatherLocation>(ShowWeatherPresentationPage);

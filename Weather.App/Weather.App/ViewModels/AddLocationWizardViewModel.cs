@@ -27,7 +27,6 @@ namespace Weather.App.ViewModels
 
         public AddLocationWizardViewModel()
         {
-            _pageService = DependencyService.Get<IPageService>();
             AddLocationByMyLocationCommand = new Command(AddLocationByMyLocation);
         }
 
@@ -76,5 +75,4 @@ namespace Weather.App.ViewModels
             }
         }
     }
-
 }
