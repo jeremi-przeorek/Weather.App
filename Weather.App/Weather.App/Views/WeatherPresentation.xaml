@@ -24,14 +24,15 @@
                            Margin="20"
                            SelectionChanged="Chart_SelectionChanged"
                            IsVisible="{Binding IsDataLoading, Converter={StaticResource inverter}}">
+                <chart:SfChart.Legend>
+
+                    <chart:ChartLegend/>
+
+                </chart:SfChart.Legend>
                 <chart:SfChart.PrimaryAxis>
 
                     <chart:CategoryAxis>
-                        <chart:CategoryAxis.Title>
-
-                            <chart:ChartAxisTitle Text="Test"></chart:ChartAxisTitle>
-
-                        </chart:CategoryAxis.Title>
+                        
                     </chart:CategoryAxis>
 
                 </chart:SfChart.PrimaryAxis>
@@ -49,23 +50,26 @@
                     <chart:ColumnSeries 
                         x:Name="columnSeries1"
                         ItemsSource="{Binding DailyForecastDtos}" 
+                        Label="Precipitation"
                         XBindingPath="Datetime" 
-                        YBindingPath="{Binding YBindingPath}"
+                        YBindingPath="Precip"
+                        Color="#1D5273"
+                        SelectedDataPointColor="#699EBF"
                         EnableAnimation="True"
                         EnableTooltip="True"
-                        IsVisible="True"
                         EnableDataPointSelection="True">
 
                     </chart:ColumnSeries>
 
                     <chart:SplineSeries 
-                        ItemsSource="{Binding DailyForecastDtos}" 
+                        ItemsSource="{Binding DailyForecastDtos}"
+                        Label="Average temp."
                         XBindingPath="Datetime" 
-                        YBindingPath="HighTemp"
-                        Color="Red"
+                        YBindingPath="Temp"
+                        Color="#FF9B1E"
                         EnableAnimation="True"
                         EnableTooltip="True"
-                        IsVisible="False">
+                        EnableDataPointSelection="True">
                     </chart:SplineSeries>
 
                 </chart:SfChart.Series>
@@ -75,7 +79,7 @@
                 <StackLayout Orientation="Vertical">
                     <StackLayout Orientation="Horizontal">
                         <Label Text="Selected day:"
-                               HorizontalOptions="Center"></Label>
+                               HorizontalOptions="StartAndExpand"></Label>
                         <Label Text="{Binding SelectedDayForecast.Datetime}"></Label>
                     </StackLayout>
                     <StackLayout Orientation="Horizontal">
