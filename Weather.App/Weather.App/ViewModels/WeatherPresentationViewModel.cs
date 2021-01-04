@@ -21,6 +21,7 @@ namespace Weather.App.ViewModels
             YBindingPath = "Temp";
             Title = string.Format("Weather forecast for {0}", location.City);
             DailyForecastDtos = new ObservableCollection<DailyForecastDto>();
+            _pageService = DependencyService.Get<IPageService>();
 
             GetWeatherDataCommand = new Command(async () => await GetWeatherData());
             ChangeSelectedDayCommand = new Command<int>(ChangeSelectedDay);
@@ -40,9 +41,15 @@ namespace Weather.App.ViewModels
         {
             IsDataLoading = true;
             var dailyForecast16DaysDto = await _weatherForecastService.GetDailyForecastFor16Days(_location);
-            DailyForecastDtos
-                = new ObservableCollection<DailyForecastDto>(dailyForecast16DaysDto.Data);
             IsDataLoading = false;
+            
+            if(dailyForecast16DaysDto == null)
+            {
+                await _pageService.DisplayAlert("Error", "There was problem with getting your data :(", "Ok");
+                return;
+            }
+
+            DailyForecastDtos = new ObservableCollection<DailyForecastDto>(dailyForecast16DaysDto.Data);
         }
 
         private void ChangeSelectedDay(int selectedDayIndex)

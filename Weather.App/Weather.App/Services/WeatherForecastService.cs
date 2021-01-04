@@ -35,16 +35,23 @@ namespace Weather.App.Services
 
         public async Task<DailyForecast16DaysDto> GetDailyForecastFor16Days(WeatherLocation location)
         {
-            var url = ApiUrl
-                .AppendPathSegments("forecast", "daily")
-                .SetQueryParams(new
-                {
-                    key = ApiKey,
-                    city = location.City,
-                    country = location.CountryCode
-                });
+            try
+            {
+                var url = ApiUrl
+                    .AppendPathSegments("forecast", "daily")
+                    .SetQueryParams(new
+                    {
+                        key = ApiKey,
+                        city = location.City,
+                        country = location.CountryCode
+                    });
 
-            return await url.GetJsonAsync<DailyForecast16DaysDto>();
+                return await url.GetJsonAsync<DailyForecast16DaysDto>();
+            }
+            catch (FlurlHttpException)
+            {
+                return null;
+            }
         }
     }
 }
