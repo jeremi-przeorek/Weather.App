@@ -6,9 +6,11 @@
              xmlns:shimmer="clr-namespace:Syncfusion.XForms.Shimmer;assembly=Syncfusion.Core.XForms"
              xmlns:local="clr-namespace:Weather.App.Converters"
              Title="{Binding Title}">
+
     <ContentPage.Resources>
         <local:InverseBoolConverter x:Key="inverter"/>
     </ContentPage.Resources>
+
     <ContentPage.Content>
         <StackLayout>
             <shimmer:SfShimmer x:Name="shimmer"
@@ -24,33 +26,28 @@
                            Margin="20"
                            SelectionChanged="Chart_SelectionChanged"
                            IsVisible="{Binding IsDataLoading, Converter={StaticResource inverter}}">
+
                 <chart:SfChart.Legend>
-
-                    <chart:ChartLegend/>
-
+                    <chart:ChartLegend>
+                        <chart:ChartLegend.LabelStyle>
+                            <chart:ChartLegendLabelStyle FontSize="15" />
+                        </chart:ChartLegend.LabelStyle>
+                    </chart:ChartLegend>
                 </chart:SfChart.Legend>
                 <chart:SfChart.PrimaryAxis>
-
                     <chart:CategoryAxis>
-                        
                     </chart:CategoryAxis>
-
                 </chart:SfChart.PrimaryAxis>
-
                 <chart:SfChart.SecondaryAxis>
-
                     <chart:NumericalAxis>
-
                     </chart:NumericalAxis>
-
                 </chart:SfChart.SecondaryAxis>
 
                 <chart:SfChart.Series>
-
                     <chart:ColumnSeries 
                         x:Name="columnSeries1"
                         ItemsSource="{Binding DailyForecastDtos}" 
-                        Label="Precipitation"
+                        Label="Precipitation (mm) &#x1F4A7;"
                         XBindingPath="Datetime" 
                         YBindingPath="Precip"
                         Color="#1D5273"
@@ -58,19 +55,35 @@
                         EnableAnimation="True"
                         EnableTooltip="True"
                         EnableDataPointSelection="True">
-
+                        <chart:ColumnSeries.TooltipTemplate>
+                            <DataTemplate>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="{Binding Precip}"/>
+                                    <Label Text="mm" />
+                                </StackLayout>
+                            </DataTemplate>
+                        </chart:ColumnSeries.TooltipTemplate>
                     </chart:ColumnSeries>
 
-                    <chart:SplineSeries 
+                    <chart:LineSeries
                         ItemsSource="{Binding DailyForecastDtos}"
-                        Label="Average temp."
+                        Label="Average temp. (°C) &#x1F321;"
                         XBindingPath="Datetime" 
                         YBindingPath="Temp"
                         Color="#FF9B1E"
                         EnableAnimation="True"
                         EnableTooltip="True"
-                        EnableDataPointSelection="True">
-                    </chart:SplineSeries>
+                        EnableDataPointSelection="True"
+                        SelectedDataPointColor="#FF9B1E">
+                        <chart:LineSeries.TooltipTemplate>
+                            <DataTemplate>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="{Binding Temp}"/>
+                                    <Label Text="°C" />
+                                </StackLayout>
+                            </DataTemplate>
+                        </chart:LineSeries.TooltipTemplate>
+                    </chart:LineSeries>
 
                 </chart:SfChart.Series>
 
