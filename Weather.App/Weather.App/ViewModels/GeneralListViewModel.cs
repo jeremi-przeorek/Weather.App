@@ -14,6 +14,20 @@ namespace Weather.App.ViewModels
     {
         private WeatherLocationRepository _weatherLocationRepository = new WeatherLocationRepository();
 
+        private ObservableCollection<WeatherLocation> _weatherLocations;
+        public ObservableCollection<WeatherLocation> WeatherLocations
+        {
+            get => _weatherLocations;
+            private set => SetProperty(ref _weatherLocations, value);
+        }
+
+        private bool _isRefreshing;
+        public bool IsRefreshing
+        {
+            get { return _isRefreshing; }
+            set { SetProperty(ref _isRefreshing, value); }
+        }
+
         public GeneralListViewModel()
         {
             _pageService = new PageService();
@@ -22,24 +36,6 @@ namespace Weather.App.ViewModels
             UpdateWeatherLocationsListCommand = new Command(UpdateWeatherLocationsList);
             ShowWeatherPresentationPageCommand = new Command<WeatherLocation>(ShowWeatherPresentationPage);
             DeleteWeatherLocationEntityCommand = new Command<WeatherLocation>(DeleteWeatherLocationEntity);
-        }
-
-        public List<WeatherLocation> Locations { get; set; } = new List<WeatherLocation>
-        {
-            new WeatherLocation{City = "Wrocław", CountryCode = "PL"},
-        };
-
-        private ObservableCollection<WeatherLocation> _weatherLocations;
-        public ObservableCollection<WeatherLocation> WeatherLocations
-        {
-            get => _weatherLocations;
-            private set => SetProperty(ref _weatherLocations, value);
-        }
-        private bool _isRefreshing;
-        public bool IsRefreshing
-        {
-            get { return _isRefreshing; }
-            set { SetProperty(ref _isRefreshing, value); }
         }
 
         public ICommand ShowAddLocationWizardCommand { get; private set; }

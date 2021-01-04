@@ -15,23 +15,45 @@ namespace Weather.App.ViewModels
         private WeatherForecastService _weatherForecastService = new WeatherForecastService();
         private WeatherLocation _location;
 
-        public WeatherPresentationViewModel(WeatherLocation location)
-        {
-            _location = location;
-            YBindingPath = "Temp";
-            Title = string.Format("Weather forecast for {0}", location.City);
-            DailyForecastDtos = new ObservableCollection<DailyForecastDto>();
-            _pageService = DependencyService.Get<IPageService>();
-
-            GetWeatherDataCommand = new Command(async () => await GetWeatherData());
-            ChangeSelectedDayCommand = new Command<int>(ChangeSelectedDay);
-        }
-
         private bool _isDataLoading;
         public bool IsDataLoading
         {
             get { return _isDataLoading; }
             set { SetProperty(ref _isDataLoading, value); }
+        }
+
+        private ObservableCollection<DailyForecastDto> _dailyForecastDtos;
+        public ObservableCollection<DailyForecastDto> DailyForecastDtos
+        {
+            get { return _dailyForecastDtos; }
+            set { SetProperty(ref _dailyForecastDtos, value); }
+        }
+
+        private int _selectedDay;
+        public int SelectedDay
+        {
+            get { return _selectedDay; }
+            set { SetProperty(ref _selectedDay, value); }
+        }
+
+        private DailyForecastDto _selectedDayForecast;
+        public DailyForecastDto SelectedDayForecast
+        {
+            get { return _selectedDayForecast; }
+            set { SetProperty(ref _selectedDayForecast, value); }
+        }
+
+        public WeatherPresentationViewModel(WeatherLocation location)
+        {
+            _location = location;
+            _pageService = DependencyService.Get<IPageService>();
+
+            Title = string.Format("Weather forecast for {0}", location.City);
+
+            DailyForecastDtos = new ObservableCollection<DailyForecastDto>();
+
+            GetWeatherDataCommand = new Command(async () => await GetWeatherData());
+            ChangeSelectedDayCommand = new Command<int>(ChangeSelectedDay);
         }
 
         public ICommand GetWeatherDataCommand { get; private set; }
@@ -55,34 +77,6 @@ namespace Weather.App.ViewModels
         private void ChangeSelectedDay(int selectedDayIndex)
         {
             SelectedDayForecast = DailyForecastDtos[selectedDayIndex];
-        }
-
-        private ObservableCollection<DailyForecastDto> _dailyForecastDtos;
-        public ObservableCollection<DailyForecastDto> DailyForecastDtos
-        {
-            get { return _dailyForecastDtos; }
-            set { SetProperty(ref _dailyForecastDtos, value); }
-        }
-
-        private string _yBindingPath;
-        public string YBindingPath
-        {
-            get { return _yBindingPath; }
-            set { SetProperty(ref _yBindingPath, value); }
-        }
-
-        private int _selectedDay;
-        public int SelectedDay
-        {
-            get { return _selectedDay; }
-            set { SetProperty(ref _selectedDay, value); }
-        }
-
-        private DailyForecastDto _selectedDayForecast;
-        public DailyForecastDto SelectedDayForecast
-        {
-            get { return _selectedDayForecast; }
-            set { SetProperty(ref _selectedDayForecast, value); }
         }
     }
 }

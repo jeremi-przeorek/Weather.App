@@ -18,22 +18,21 @@ namespace Weather.App.ViewModels
         private WeatherLocationRepository _weatherLocationRepository = new WeatherLocationRepository();
         private WeatherForecastService _weatherForecastService = new WeatherForecastService();
 
+        public bool _isRefreshing;
+        public bool IsRefreshing
+        {
+            get { return _isRefreshing; }
+            set { SetProperty(ref _isRefreshing, value); }
+        }
+
         public AddLocationWizardViewModel()
         {
             _pageService = DependencyService.Get<IPageService>();
             AddLocationByMyLocationCommand = new Command(AddLocationByMyLocation);
         }
 
-
         public ICommand AddLocationByMyLocationCommand { get; private set; }
         public ICommand AddLocationByListCommand { get; private set; }
-
-        public bool _isRefreshing; 
-        public bool IsRefreshing
-        {
-            get { return _isRefreshing; }
-            set {SetProperty(ref _isRefreshing, value); }
-        }
 
         private async void AddLocationByMyLocation()
         {
