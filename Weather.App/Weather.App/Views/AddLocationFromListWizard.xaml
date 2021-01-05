@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CarouselPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Weather.App.Views.AddLocationFromListWizard"
+              xmlns:local="clr-namespace:Weather.App.Converters">
+
+    <CarouselPage.Resources>
+        <local:CountryCodeToFlagEmojiConverter x:Key="countryCodeToEmoji"/>
+    </CarouselPage.Resources>
+
+    <ContentPage>
+        <ListView HasUnevenRows="True" 
+                      ItemsSource="{Binding Locations}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell Height="80">
+                        <StackLayout Orientation="Horizontal" VerticalOptions="Center">
+                            <Label Text="{Binding City}"
+                                       FontSize="Title"
+                                       Margin="20"></Label>
+                            <Label Text="{Binding CountryCode, Converter={StaticResource Key=countryCodeToEmoji}}"
+                                       HorizontalOptions="EndAndExpand"
+                                       FontSize="Title"
+                                       Margin="20"></Label>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </ContentPage>
+    <ContentPage>
+        <Label Text="2"></Label>
+    </ContentPage>
+</CarouselPage>

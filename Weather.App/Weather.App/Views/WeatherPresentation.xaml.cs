@@ -22,24 +22,24 @@ namespace Weather.App.Views
             BindingContext = new WeatherPresentationViewModel(location);
         }
 
-        private WeatherPresentationViewModel ViewModel
-        {
-            get { return BindingContext as WeatherPresentationViewModel; }
-            set { BindingContext = value; }
-        }
-
         protected override void OnAppearing()
         {
             ViewModel.GetWeatherDataCommand.Execute(null);
 
             base.OnAppearing();
         }
+
         private void Chart_SelectionChanged(object sender, ChartSelectionEventArgs e)
         {
             if (e.SelectedDataPointIndex > -1)
             {
                 ViewModel.ChangeSelectedDayCommand.Execute(e.SelectedDataPointIndex);
             }
+        }
+        private WeatherPresentationViewModel ViewModel
+        {
+            get { return BindingContext as WeatherPresentationViewModel; }
+            set { BindingContext = value; }
         }
     }
 }

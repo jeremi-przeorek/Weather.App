@@ -8,6 +8,7 @@ using System.Windows.Input;
 using Weather.App.Data;
 using Weather.App.Models;
 using Weather.App.Services;
+using Weather.App.Views;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -28,6 +29,7 @@ namespace Weather.App.ViewModels
         public AddLocationWizardViewModel()
         {
             AddLocationByMyLocationCommand = new Command(AddLocationByMyLocation);
+            AddLocationByListCommand = new Command(AddLocationByList);
         }
 
         public ICommand AddLocationByMyLocationCommand { get; private set; }
@@ -73,6 +75,11 @@ namespace Weather.App.ViewModels
             {
                 // Unable to get location
             }
+        }
+
+        private async void AddLocationByList()
+        {
+            await _pageService.PushAsync(new AddLocationFromListWizard());
         }
     }
 }

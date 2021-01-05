@@ -23,7 +23,6 @@
                     Command="{Binding AddLocationByListCommand}"
                     CornerRadius="20"
                     VerticalOptions="Center"
-                    IsEnabled="False"
                     Grid.Row="2"/>
         </Grid>
     </ContentPage.Content>
