@@ -9,24 +9,27 @@
     </CarouselPage.Resources>
 
     <ContentPage>
-        <ListView HasUnevenRows="True" 
-                      ItemsSource="{Binding Locations}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell Height="80">
-                        <StackLayout Orientation="Horizontal" VerticalOptions="Center">
-                            <Label Text="{Binding City}"
+        <StackLayout>
+            <SearchBar Text="{Binding SearchBarText}"/>
+            <ListView HasUnevenRows="True" 
+                  ItemsSource="{Binding Locations}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell Height="80">
+                            <StackLayout Orientation="Horizontal" VerticalOptions="Center">
+                                <Label Text="{Binding City}"
                                        FontSize="Title"
                                        Margin="20"></Label>
-                            <Label Text="{Binding CountryCode, Converter={StaticResource Key=countryCodeToEmoji}}"
+                                <Label Text="{Binding CountryCode, Converter={StaticResource Key=countryCodeToEmoji}}"
                                        HorizontalOptions="EndAndExpand"
                                        FontSize="Title"
                                        Margin="20"></Label>
-                        </StackLayout>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
     </ContentPage>
     <ContentPage>
         <Label Text="2"></Label>

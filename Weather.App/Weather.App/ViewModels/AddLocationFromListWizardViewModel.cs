@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -11,11 +13,24 @@ namespace Weather.App.ViewModels
 {
     public class AddLocationFromListWizardViewModel : BaseViewModel
     {
-        private List<WeatherLocation> _locations;
-        public List<WeatherLocation> Locations
+        private ObservableCollection<WeatherLocation> _locationsUnfiltered;
+
+        private ObservableCollection<WeatherLocation> _locations;
+        public ObservableCollection<WeatherLocation> Locations
         {
             get { return _locations; }
             set { SetProperty(ref _locations, value); }
+        }
+
+        private string _searchBarText;
+        public string SearchBarText
+        {
+            get { return _searchBarText; }
+            set
+            {
+                _searchBarText = value;
+                TextChangedInSearchBar(value);
+            }
         }
 
         public AddLocationFromListWizardViewModel()
@@ -27,7 +42,21 @@ namespace Weather.App.ViewModels
 
         private async Task LoadLocations()
         {
-            Locations = await ResourcesLoader.LoadWeatherLocations();
+            Locations = new ObservableCollection<WeatherLocation>(await ResourcesLoader.LoadWeatherLocations());
+            _locationsUnfiltered = Locations;
+        }
+
+        private void TextChangedInSearchBar(string input)
+        {
+            if (!string.IsNullOrEmpty(input))
+            {
+                Locations = new ObservableCollection<WeatherLocation>(
+                    _locationsUnfiltered.Where(x => x.City.StartsWith(input, StringComparison.OrdinalIgnoreCase)));
+            }
+            else
+            {
+                Locations = _locationsUnfiltered;
+            }
         }
     }
 }
