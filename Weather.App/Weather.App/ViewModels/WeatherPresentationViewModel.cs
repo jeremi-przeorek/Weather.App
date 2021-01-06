@@ -22,8 +22,8 @@ namespace Weather.App.ViewModels
             set { SetProperty(ref _isDataLoading, value); }
         }
 
-        private ObservableCollection<DailyForecastDto> _dailyForecastDtos;
-        public ObservableCollection<DailyForecastDto> DailyForecastDtos
+        private List<DailyForecastDto> _dailyForecastDtos;
+        public List<DailyForecastDto> DailyForecastDtos
         {
             get { return _dailyForecastDtos; }
             set { SetProperty(ref _dailyForecastDtos, value); }
@@ -49,7 +49,7 @@ namespace Weather.App.ViewModels
 
             Title = string.Format("Weather forecast for {0}", location.City);
 
-            DailyForecastDtos = new ObservableCollection<DailyForecastDto>();
+            DailyForecastDtos = new List<DailyForecastDto>();
 
             GetWeatherDataCommand = new Command(async () => await GetWeatherData());
             ChangeSelectedDayCommand = new Command<int>(ChangeSelectedDay);
@@ -70,7 +70,7 @@ namespace Weather.App.ViewModels
                 return;
             }
 
-            DailyForecastDtos = new ObservableCollection<DailyForecastDto>(dailyForecast16DaysDto.Data);
+            DailyForecastDtos = new List<DailyForecastDto>(dailyForecast16DaysDto.Data);
         }
 
         private void ChangeSelectedDay(int selectedDayIndex)

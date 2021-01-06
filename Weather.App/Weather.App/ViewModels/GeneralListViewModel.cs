@@ -14,8 +14,8 @@ namespace Weather.App.ViewModels
     {
         private WeatherLocationRepository _weatherLocationRepository = new WeatherLocationRepository();
 
-        private ObservableCollection<WeatherLocation> _weatherLocations;
-        public ObservableCollection<WeatherLocation> WeatherLocations
+        private List<WeatherLocation> _weatherLocations;
+        public List<WeatherLocation> WeatherLocations
         {
             get => _weatherLocations;
             private set => SetProperty(ref _weatherLocations, value);
@@ -30,7 +30,7 @@ namespace Weather.App.ViewModels
 
         public GeneralListViewModel()
         {
-            WeatherLocations = new ObservableCollection<WeatherLocation>(_weatherLocationRepository.GetAll());
+            WeatherLocations = new List<WeatherLocation>(_weatherLocationRepository.GetAll());
 
             ShowAddLocationWizardCommand = new Command(ShowAddLocationWizard);
             UpdateWeatherLocationsListCommand = new Command(UpdateWeatherLocationsList);
@@ -50,7 +50,7 @@ namespace Weather.App.ViewModels
 
         private void UpdateWeatherLocationsList()
         {
-            WeatherLocations = new ObservableCollection<WeatherLocation>(_weatherLocationRepository.GetAll());
+            WeatherLocations = new List<WeatherLocation>(_weatherLocationRepository.GetAll());
             IsRefreshing = false;
         }
 

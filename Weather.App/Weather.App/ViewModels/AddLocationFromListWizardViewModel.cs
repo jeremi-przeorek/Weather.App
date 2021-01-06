@@ -13,10 +13,10 @@ namespace Weather.App.ViewModels
 {
     public class AddLocationFromListWizardViewModel : BaseViewModel
     {
-        private ObservableCollection<WeatherLocation> _locationsUnfiltered;
+        private List<WeatherLocation> _locationsUnfiltered;
 
-        private ObservableCollection<WeatherLocation> _locations;
-        public ObservableCollection<WeatherLocation> Locations
+        private List<WeatherLocation> _locations;
+        public List<WeatherLocation> Locations
         {
             get { return _locations; }
             set { SetProperty(ref _locations, value); }
@@ -42,7 +42,7 @@ namespace Weather.App.ViewModels
 
         private async Task LoadLocations()
         {
-            Locations = new ObservableCollection<WeatherLocation>(await ResourcesLoader.LoadWeatherLocations());
+            Locations = new List<WeatherLocation>(await ResourcesLoader.LoadWeatherLocations());
             _locationsUnfiltered = Locations;
         }
 
@@ -50,7 +50,7 @@ namespace Weather.App.ViewModels
         {
             if (!string.IsNullOrEmpty(input))
             {
-                Locations = new ObservableCollection<WeatherLocation>(
+                Locations = new List<WeatherLocation>(
                     _locationsUnfiltered.Where(x => x.City.StartsWith(input, StringComparison.OrdinalIgnoreCase)));
             }
             else
