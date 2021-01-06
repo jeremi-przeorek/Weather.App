@@ -21,6 +21,12 @@ namespace Weather.App.Views
             base.OnAppearing();
         }
 
+        private void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
+        {
+            ViewModel.AddLocationCommand.Execute(e.Item);
+            ((ListView)sender).SelectedItem = null;
+        }
+
         private AddLocationFromListWizardViewModel ViewModel
         {
             get { return BindingContext as AddLocationFromListWizardViewModel; }

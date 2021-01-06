@@ -13,8 +13,9 @@ namespace Weather.App.ViewModels
 {
     public class AddLocationFromListWizardViewModel : BaseViewModel
     {
-        private List<WeatherLocation> _locationsUnfiltered;
+        private WeatherLocationRepository _weatherLocationRepository = new WeatherLocationRepository();
 
+        private List<WeatherLocation> _locationsUnfiltered;
         private List<WeatherLocation> _locations;
         public List<WeatherLocation> Locations
         {
@@ -36,9 +37,11 @@ namespace Weather.App.ViewModels
         public AddLocationFromListWizardViewModel()
         {
             LoadLocationsCommand = new Command(async () => await LoadLocations());
+            AddLocationCommand = new Command<WeatherLocation>(async (location) => await AddLocation(location));
         }
 
         public ICommand LoadLocationsCommand { get; set; }
+        public ICommand AddLocationCommand { get; set; }
 
         private async Task LoadLocations()
         {
@@ -57,6 +60,17 @@ namespace Weather.App.ViewModels
             {
                 Locations = _locationsUnfiltered;
             }
+        }
+
+        private async Task AddLocation(WeatherLocation location)
+        {
+            _weatherLocationRepository.Add(new WeatherLocation
+            {
+                City = location.City,
+                CountryCode = location.CountryCode,
+            });
+
+            await _pageService.DisplayAlert(string.Empty, string.Format("Properly added city: {0}", location.City), "Ok");
         }
     }
 }

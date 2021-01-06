@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows.Input;
+using Weather.App.Data;
 using Weather.App.Models;
-using Weather.App.Services;
 using Weather.App.Views;
 using Xamarin.Forms;
 

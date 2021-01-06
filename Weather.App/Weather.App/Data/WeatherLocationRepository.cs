@@ -3,11 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Weather.App.Data;
 using Weather.App.Models;
+using Weather.App.Services;
 using Xamarin.Essentials;
 
-namespace Weather.App.Services
+namespace Weather.App.Data
 {
     class WeatherLocationRepository : IWeatherLocationRepository
     {
@@ -15,7 +15,7 @@ namespace Weather.App.Services
 
         public void Add(WeatherLocation location)
         {
-            using(var weatherlocationContext = new WeatherLocationContext())
+            using (var weatherlocationContext = new WeatherLocationContext())
             {
                 weatherlocationContext.WeatherLocations.Add(location);
                 weatherlocationContext.SaveChanges();

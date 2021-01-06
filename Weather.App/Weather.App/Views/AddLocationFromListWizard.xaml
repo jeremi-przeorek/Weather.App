@@ -12,7 +12,8 @@
         <StackLayout>
             <SearchBar Text="{Binding SearchBarText}"/>
             <ListView HasUnevenRows="True" 
-                  ItemsSource="{Binding Locations}">
+                      ItemsSource="{Binding Locations}"
+                      ItemTapped="ListView_ItemTapped">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell Height="80">
